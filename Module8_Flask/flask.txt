@@ -1,0 +1,328 @@
+FLASK COMPLETE INTERVIEW NOTES (HINGLISH)
+ONE STOP RESOURCE – READ THIS ONLY
+
+====================================================
+1. WHAT IS A WEB FRAMEWORK?
+====================================================
+
+Web framework ek ready-made toolkit hota hai jo web applications banana easy bana deta hai.
+
+Without framework:
+- HTTP requests manually handle karni padti
+- Routing khud likhni padti
+- Security, sessions, cookies sab khud
+- Database integration complex hota
+
+With framework:
+- Routing already available
+- Template engine milta hai
+- Security features built-in
+- Database ke tools milte hain
+
+Interview line:
+A web framework abstracts low-level web complexities and allows developers to focus on business logic.
+
+====================================================
+2. TYPES OF WEB FRAMEWORKS
+====================================================
+
+1. Full / Macro Frameworks
+Examples:
+- Django
+- Ruby on Rails
+
+Features:
+- ORM built-in
+- Authentication
+- Admin panel
+- Heavy but powerful
+
+2. Micro Frameworks
+Examples:
+- Flask
+- Bottle
+- CherryPy
+
+Features:
+- Lightweight
+- Sirf basic features
+- Developer decide karta hai kya add karna hai
+
+Interview tip:
+Flask microframework hai kyunki yeh sirf essential tools provide karta hai.
+
+====================================================
+3. WHAT IS FLASK?
+====================================================
+
+Flask ek lightweight Python web framework hai.
+
+Creator:
+Armin Ronacher
+Year: 2010
+
+Flask internally use karta hai:
+- WSGI (Web Server Gateway Interface)
+- Werkzeug (request/response handling)
+- Jinja2 (template engine)
+
+Interview line:
+Flask is built on Werkzeug and Jinja2.
+
+====================================================
+4. FLASK VS DJANGO
+====================================================
+
+Flask:
+- Micro framework
+- ORM nahi hota
+- Zyada flexible
+- APIs & microservices ke liye best
+
+Django:
+- Full framework
+- ORM built-in
+- Admin panel
+- Large applications ke liye best
+
+Interview conclusion:
+Full features chahiye -> Django
+Lightweight & control chahiye -> Flask
+
+====================================================
+5. PROS AND CONS OF FLASK
+====================================================
+
+Advantages:
+1. Easy to learn
+2. Highly flexible
+3. Built-in debugger
+4. Simple routing & DB integration
+
+Disadvantages:
+1. Default async support nahi
+2. Large applications ke liye limited
+
+Interview analogy:
+Flask ek single cashier jaisa hai, zyada traffic aaya to queue ban jaati hai.
+
+====================================================
+6. VIRTUAL ENVIRONMENT (VERY IMPORTANT)
+====================================================
+
+Virtual environment use hota hai:
+- Dependency isolation ke liye
+- Version conflict avoid karne ke liye
+
+Commands:
+
+python -m venv env_name
+env_name\Scripts\activate        (Windows)
+source env_name/bin/activate     (Linux/Mac)
+deactivate
+
+Interview line:
+Virtual environments ensure dependency isolation and reproducibility.
+
+====================================================
+7. FLASK INSTALLATION
+====================================================
+
+pip install Flask
+
+====================================================
+8. BASIC FLASK APPLICATION
+====================================================
+
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Hello Flask"
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+Explanation:
+- Flask(__name__) creates app instance
+- @app.route('/') maps URL
+- debug=True enables auto reload & error page
+
+====================================================
+9. ROUTING IN FLASK
+====================================================
+
+Routing = URL ko Python function se map karna
+
+Example:
+
+@app.route('/courses')
+def courses():
+    return "Data Science Courses"
+
+Multiple routes:
+
+@app.route('/')
+@app.route('/home')
+def home():
+    return "Home Page"
+
+Interview tip:
+Flask routing decorators ka use karta hai.
+
+====================================================
+10. VIEWS IN FLASK
+====================================================
+
+View ek Python function hota hai jo response return karta hai.
+
+Example:
+
+def home():
+    return "Welcome"
+
+====================================================
+11. HTTP METHODS (GET & POST)
+====================================================
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    if request.method == 'POST':
+        return "POST request"
+    return "GET request"
+
+Interview question:
+Default HTTP method in Flask = GET
+
+====================================================
+12. REQUEST OBJECT
+====================================================
+
+Request object client se aayi request ka data rakhta hai:
+- query params
+- form data
+- headers
+- cookies
+
+Example:
+
+from flask import request
+
+request.args.get('name')   (GET)
+request.form.get('name')   (POST)
+
+====================================================
+13. RESPONSE OBJECT
+====================================================
+
+from flask import make_response
+
+response = make_response("Hello")
+response.status_code = 200
+response.headers['Content-Type'] = 'text/plain'
+return response
+
+Note:
+Agar tum string ya JSON return karte ho, Flask automatically response bana deta hai.
+
+====================================================
+14. TEMPLATES (JINJA2)
+====================================================
+
+Templates ka use hota hai:
+- HTML aur Python logic separate karne ke liye
+- Dynamic data show karne ke liye
+
+Folder structure:
+
+project/
+ app.py
+ templates/
+  home.html
+
+Example:
+
+return render_template("home.html", name="Kushagra")
+
+HTML:
+
+<h1>Hello {{ name }}</h1>
+
+====================================================
+15. STYLING IN FLASK
+====================================================
+
+CSS apply karne ke 3 tareeke:
+1. Inline CSS
+2. <style> tag
+3. External CSS (recommended)
+
+External CSS:
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+====================================================
+16. DATABASE IN FLASK (SQLALCHEMY)
+====================================================
+
+pip install flask-sqlalchemy
+
+Example:
+
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy(app)
+
+class Blog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+
+db.create_all()
+
+ORM ka matlab:
+Python objects ke through database handle karna.
+
+====================================================
+17. RESTFUL APIS (MOST IMPORTANT)
+====================================================
+
+REST principles:
+- Resource -> URL
+- HTTP methods -> CRUD
+
+Methods:
+GET -> Read
+POST -> Create
+PUT -> Update
+DELETE -> Delete
+
+Example:
+
+@app.route('/tasks', methods=['GET'])
+def get_tasks():
+    return jsonify(tasks)
+
+Interview line:
+Flask is ideal for building RESTful APIs and microservices.
+
+====================================================
+FINAL INTERVIEW SUMMARY
+====================================================
+
+- Flask lightweight aur flexible framework hai
+- Best for:
+  - APIs
+  - Microservices
+  - Prototypes
+  - Small to medium applications
+
+- Django tab use karo jab:
+  - Built-in features chahiye
+  - Large monolithic application ho
+
+Agar tumne ye poori file padh li,
+to Flask interview confidently crack kar sakte ho.
+
+END OF FILE
